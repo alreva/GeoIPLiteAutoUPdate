@@ -35,14 +35,16 @@ let main argv =
 
     use w = new StreamWriter(File.OpenWrite(outFile))
 
-    w.WriteLine("-- USE eCom_Commmon")
-    w.WriteLine("-- GO")
-    w.WriteLine()
-    w.WriteLine("TRUNCATE TABLE [dbo].[GeoIPCountryWhoIs]")
-    w.WriteLine()
+    [|
+        "-- USE eCom_Commmon"
+        "-- GO"
+        ""
+        "TRUNCATE TABLE [dbo].[GeoIPCountryWhoIs]"
+        ""
+    |] |> Array.iter w.WriteLine
 
-    for line in lines do 
-        w.WriteLine(line)
+    lines |>
+        Seq.iter w.WriteLine
 
     printfn "done."
 
